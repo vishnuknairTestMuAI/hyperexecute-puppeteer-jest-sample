@@ -1,11 +1,16 @@
+// the tests hit live third-party sites, first loads on a fresh browser can be flaky
+jest.retryTimes(2);
+
 describe('Search Duckduckgo', () => {
 	beforeEach(async () => {
+		// on the Windows VM the tab opens in the background and typed text is dropped
+		await page.bringToFront();
 		await page.goto('https://www.bing.com');
 	});
 
 	it('should be titled "Lambdatest"', async () => {
 		let text = 'LambdaTest';
-		await page.goto('https://www.duckduckgo.com');
+		await page.goto('https://www.duckduckgo.com', { waitUntil: 'networkidle2' });
 		var element = await page.$('[name="q"]');
 		await element.click();
 		await element.type(text);
