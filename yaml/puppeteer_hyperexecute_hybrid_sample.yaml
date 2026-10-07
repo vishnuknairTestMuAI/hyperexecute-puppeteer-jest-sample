@@ -15,8 +15,6 @@ matrix:
   files: ["specs/google.spec.js","specs/lt.spec.js"]
 
 pre:
-  # clear the stale Chrome profile lock shipped in the VM image
-  - rm -f /home/ltuser/.config/google-chrome/Singleton*
   - npm install
 
 cacheKey: '{{ checksum "package.json" }}'
